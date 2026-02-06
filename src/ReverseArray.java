@@ -13,8 +13,16 @@ public class ReverseArray {
     }
     // Reverse the elements in x in place, so do not create new arrays: private static void flip2( int[]x , int a, int b ) {
     private static void flip2( int[]x , int a, int b ) {
-        if (a <= b) {
+        if (a < 0 || b < 0) {
+            return;
         }
+        if (a - b >= 0 && a - b <= 1) {
+            return;
+        }
+        int temp = x[a];
+        x[a] = x[b];
+        x[b] = temp;
+        flip2(x, a + 1, b - 1);
     }
 
     public static void print(int[] x) {
