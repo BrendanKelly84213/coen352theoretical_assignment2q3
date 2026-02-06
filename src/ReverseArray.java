@@ -11,18 +11,46 @@ public class ReverseArray {
         flip2(x, 0, x.length-1);
         return x;
     }
+
     // Reverse the elements in x in place, so do not create new arrays: private static void flip2( int[]x , int a, int b ) {
+    // a = 0, b = 3
+    // swap 0 and 2
+    // swap 1 and 3
+    // 2314 -> middleIndex = 2
+    // 1324
+    // 1423
+
+    // a = 0, b = 1
+    // 41 -> middleIndex = 1
+    // swap 0 and 1
+    //
+
     private static void flip2( int[]x , int a, int b ) {
-        if (a < 0 || b < 0) {
+        if (b - a <= 0) {
             return;
         }
-        if (a - b >= 0 && a - b <= 1) {
+
+        if (b - a == 1) {
+            int temp = x[b];
+            x[b] = x[a];
+            x[a] = temp;
             return;
         }
-        int temp = x[a];
-        x[a] = x[b];
-        x[b] = temp;
-        flip2(x, a + 1, b - 1);
+
+        int length = b - a + 1;
+        int middleIndex = a + length / 2;
+        int oddCompensator = length % 2 == 0 ? 0 : 1;
+        for (int i = 0; i < middleIndex; ++i) {
+            int left = i + a;
+            int right = middleIndex + i + oddCompensator;
+            // swap
+            int temp = x[right];
+            x[right] = x[left];
+            x[left] = temp;
+        }
+
+        flip2(x, a, middleIndex - 1);
+        flip2(x, middleIndex + oddCompensator, b);
     }
 
     public static void print(int[] x) {
